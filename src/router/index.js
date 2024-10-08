@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import LoginPage from "../components/LoginPage.vue";
-import LayoutMenu from "../components/LayoutMenu.vue";
+import LoginPage from "../view/LoginPage.vue";
+import LayoutMenu from "../view/LayoutMenu.vue";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
