@@ -1,7 +1,29 @@
 <template>
-  <a-menu v-mode="horizontal" :items="items" class="" />
+  <Layout class="h-[100vh]">
+    <LayoutSider width="70" style="background-color: #f8f9fc">
+      <Menu v-mode="horizontal" :items="items" />
+    </LayoutSider>
+    <Layout>
+      <LayoutHeader class="w-[100vw] h-[4rem] !bg-[#ffffff] border-b-2">
+        <div class="w-full h-full leading-[4rem] font-bold">代码仓库</div>
+      </LayoutHeader>
+      <Layout>
+        <LayoutContent class="!p-[10px] !box-border !bg-[#ffffff]">
+          <RouterView />
+        </LayoutContent>
+      </Layout>
+    </Layout>
+  </Layout>
 </template>
 <script setup>
+import {
+  Layout,
+  LayoutSider,
+  LayoutContent,
+  LayoutHeader,
+  Menu,
+} from "ant-design-vue";
+import { RouterView } from "vue-router";
 import { h, ref } from "vue";
 import {
   FormOutlined,

@@ -1,55 +1,70 @@
 <template>
-  <div class="flex">
-    <div class="flex flex-col">
-      <banner />
+  <div class="flex items-center">
+    <div class="w-[550px] h-[100vh]">
+      <Carousel autoplay>
+        <img
+          src="../assets/images/appm3V1L6Y3C3podIGShCo686dXRRY4i.png"
+          class="h-[100vh]"
+        />
+        <img
+          src="../assets/images/appzx4bpYR9rpFdZULrF9EFycs2l-416.png"
+          class="h-[100vh]"
+        />
+        <img
+          src="../assets/images/app9KTBmXHMK2mtI9RHyzPDs-h0NXne1.png"
+          class="h-[100vh]"
+        />
+      </Carousel>
     </div>
-    <div class="flex-1">
-      <div class="flex-1 text-center">
-        <h2 class="text-[20px] pt-[10vw]">登录，即刻创造您的应用</h2>
-        <div class="pt-[8vw]">
-          <a-space direction="vertical" class="pb-[30px]">
-            <a-input
-              v-model:value="userInfo.username"
-              placeholder="账号"
-              class="h-[40px] w-[250px]"
-            />
-            <a-input
-              v-model:value="userInfo.password"
-              placeholder="密码"
-              class="h-[40px] w-[250px]"
-            /> </a-space
-          ><br />
-          <a-checkbox v-model:checked="checked" class="pb-[8vw]"
-            >我已阅读并同意 <a class="text-[blue]">服务协议 </a>和
-            <a href="" class="text-[blue]">隐私政策</a> </a-checkbox
-          ><br />
-          <a-button
-            @click="login"
-            type="primary"
-            class="pb-[10px] w-[150px] h-[40px]"
-            >登录</a-button
-          ><br />
+    <div class="flex-1 h-[100vh] flex justify-center items-center">
+      <div class="flex flex-col justify-center items-center w-[500px]">
+        <h1 class="text-[27px] font-bold mb-[3rem]">登录，即刻创造您的应用</h1>
+        <Space direction="vertical" size="large">
+          <Input
+            v-model:value="userInfo.username"
+            placeholder="账号"
+            class="h-[50px] w-[350px]"
+          >
+          </Input>
+          <Input.Password
+            v-model:value.lazy="userInfo.password"
+            placeholder="密码"
+            class="h-[50px] w-[350px]"
+          />
+        </Space>
+        <div class="mb-[2rem]">
+          <Radio v-model:checked="checked">
+            我已阅读并同意<Button type="link">服务协议</Button>和
+            <Button type="link">隐私政策</Button>
+          </Radio>
         </div>
+        <Button @click="fn" type="primary" class="h-[50px] w-[350px]"
+          >登录</Button
+        >
       </div>
     </div>
   </div>
 </template>
 <script setup>
-import banner from "../components/banner.vue";
+import { Carousel, Button, Space, Input, Radio } from "ant-design-vue";
+import { getAccToken } from "../service/api";
+import to from "await-to-js";
 import { ref } from "vue";
+const checked = ref();
 const userInfo = ref({
   username: "",
-  pass: "",
+  password: "",
 });
-const login = () => {
-  // 这里应该有验证逻辑，比如调用API验证用户名和密码
-  if (username.value === "" && password.value === "") {
-    // 登录成功，跳转到目标页面
-    router.push("/layout");
-  } else {
-    // 登录失败，提示用户
-    alert("用户名或密码错误");
-  }
+const fn = async () => {
+  const LoginData = {
+    grant_type: "password",
+    username: userInfo.value.username,
+    password: userInfo.value.password,
+    client_id: import.meta.env.VITE_CLIENT_ID,
+    client_secret: import.meta.env.VITE_CLIENT_SECRET,
+    scope: import.meta.env.VITE_SCOPE,
+  };
+  const [err, res] = await to(getAccToken(LoginData));
+  console.log(err, res);
 };
 </script>
-<style scoped></style>
