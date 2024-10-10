@@ -50,21 +50,31 @@ import { Carousel, Button, Space, Input, Radio } from "ant-design-vue";
 import { getAccToken } from "../service/api";
 import to from "await-to-js";
 import { ref } from "vue";
+import router from "../router";
 const checked = ref();
 const userInfo = ref({
-  username: "",
-  password: "",
+  username: "3389272241@qq.com",
+  password: "you20031111",
 });
 const fn = async () => {
   const LoginData = {
     grant_type: "password",
     username: userInfo.value.username,
     password: userInfo.value.password,
-    client_id: import.meta.env.VITE_CLIENT_ID,
-    client_secret: import.meta.env.VITE_CLIENT_SECRET,
-    scope: import.meta.env.VITE_SCOPE,
+    client_id:
+      "25bc8a3ff0e04b0e13f969b731dd10584ee0e8bed4e64af21a8c1121b22e81c4",
+    client_secret:
+      "731013769d23b46c104dca5fe6f98739e064a61350464b9e18b6e66a08406ae4",
+    scope:
+      "user_info projects pull_requests issues notes keys hook groups gists enterprises",
   };
   const [err, res] = await to(getAccToken(LoginData));
   console.log(err, res);
+  try {
+    //成功后跳转
+    router.push("/layout");
+  } catch (error) {
+    console.error("获取密码失败:", error);
+  }
 };
 </script>
