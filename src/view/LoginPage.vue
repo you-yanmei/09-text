@@ -71,7 +71,7 @@ const fn = async () => {
   const [err, res] = await to(getAccToken(LoginData));
   console.log(err, res);
   try {
-    //成功后跳转
+    //成功后跳转页面
     router.push("/layout");
   } catch (error) {
     console.error("获取密码失败:", error);
